@@ -1,0 +1,30 @@
+﻿<Window x:Class="FolderWatcherExe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FolderWatcherExe"
+        mc:Ignorable="d"
+        Title="{Binding Caption}" 
+        SizeToContent="WidthAndHeight"
+        xmlns:busy="clr-namespace:CommonTools.Lib45.BusyIndicators;assembly=CommonTools.Lib45"
+        xmlns:butns="clr-namespace:CommonTools.Lib45.StyledButtons;assembly=CommonTools.Lib45"
+        xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <DockPanel>
+        <butns:UpdatedExeNotifierBar DataContext="{Binding UpdateNotifier}"
+                                     DockPanel.Dock="Top" />
+        <Grid>
+
+            <TextBlock Text="Hello World!" Margin="200" />
+
+            <busy:BusyDialog />
+        </Grid>
+    </DockPanel>
+</Window>
