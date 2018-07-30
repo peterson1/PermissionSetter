@@ -108,6 +108,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSystemTools\FolderChangeWatcher1.cs" />
+    <Compile Include="FileSystemTools\ThrottledFolderWatcher1.cs" />
     <Compile Include="ValidationRules\NotBlankValidationRule.cs" />
     <Compile Include="ValueConverters\DecimalProxyConverter.cs" />
     <Compile Include="ValueConverters\FirstLetterConverter.cs" />

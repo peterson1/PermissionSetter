@@ -21,8 +21,8 @@
         <butns:UpdatedExeNotifierBar DataContext="{Binding UpdateNotifier}"
                                      DockPanel.Dock="Top" />
         <Grid>
-
-            <TextBlock Text="Hello World!" Margin="200" />
+            <ListView ItemsSource="{Binding Logs}"
+                      Height="500" />
 
             <busy:BusyDialog />
         </Grid>

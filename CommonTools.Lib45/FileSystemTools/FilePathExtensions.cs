@@ -205,17 +205,30 @@ namespace CommonTools.Lib45.FileSystemTools
         //https://stackoverflow.com/a/16216587/3973863
         public static void GrantEveryoneFullControl(this string filePath)
         {
-            if (!File.Exists(filePath))
-                throw Missing.File(filePath, "Target file for GrantEveryoneFullControl()");
-
-            var info = new FileInfo(filePath);
-            var fSec = info.GetAccessControl();
+            var fSec = GetSecurityInfo(filePath);
             var user = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
             var rule = new FileSystemAccessRule(user,
                         FileSystemRights.FullControl,
                         AccessControlType.Allow);
             fSec.AddAccessRule(rule);
             File.SetAccessControl(filePath, fSec);
+        }
+
+
+        private static FileSecurity GetSecurityInfo(string filePath)
+        {
+            if (!File.Exists(filePath))
+                throw Missing.File(filePath, "Target file for GrantEveryoneFullControl()");
+
+            var info = new FileInfo(filePath);
+            return info.GetAccessControl();
+        }
+
+
+
+        public static bool HasEveryoneFullControl(this string filePath)
+        {
+            return false; //todo: implement this
         }
 
 

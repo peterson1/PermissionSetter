@@ -1,4 +1,5 @@
 ﻿using CommonTools.Lib45.ApplicationTools;
+using FolderWatcherExe.Configuration;
 using PermissionSetter.Lib11.Configuration;
 using System.Windows;
 
@@ -10,7 +11,7 @@ namespace FolderWatcherExe
         {
             base.OnStartup(e);
 
-            this.Initialize<AppArguments>(args
+            this.Initialize<CommandLineArgs>(args
                 => new MainWindowVM(args).Show<MainWindow>());
         }
     }
