@@ -19,11 +19,11 @@ namespace FolderWatcherExe.ChangeHandlers
         {
             _cfg    = permissionSettings;
             _watchr = new ThrottledFolderWatcher1(1000);
-            _watchr.FileChanged += (s, e) => OnFileChanged(e);
+            _watchr.FileChanged += async (s, e) => await OnFileChanged(e);
         }
 
 
-        private async void OnFileChanged(string filePath)
+        private async Task OnFileChanged(string filePath)
         {
             var nme = Path.GetFileNameWithoutExtension(filePath);
             await WaitForDelay((int)_cfg.WatcherDelayMS, nme);
@@ -55,11 +55,21 @@ namespace FolderWatcherExe.ChangeHandlers
         }
 
 
-        public void StartWatching()
+        public async void StartWatching()
         {
+            await ProcessAllFiles();
             _watchr.StartWatching(_cfg.TargetFolder);
             Log($"Started watching target folder (delay: {_cfg.WatcherDelayMS}ms):");
             Log(_cfg.TargetFolder);
+        }
+
+
+        private async Task ProcessAllFiles()
+        {
+            var dir = _cfg.TargetFolder;
+
+            foreach (var file in Directory.GetFiles(dir))
+                await OnFileChanged(file);
         }
 
 
