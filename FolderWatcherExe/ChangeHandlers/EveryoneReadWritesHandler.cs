@@ -19,14 +19,16 @@ namespace FolderWatcherExe.ChangeHandlers
         {
             _cfg    = permissionSettings;
             _watchr = new ThrottledFolderWatcher1(1000);
-            _watchr.FileChanged += async (s, e) => await OnFileChanged(e);
+            _watchr.FileChanged += async (s, e) => await OnFileChanged(e, true);
         }
 
 
-        private async Task OnFileChanged(string filePath)
+        private async Task OnFileChanged(string filePath, bool withDelay)
         {
-            var nme = Path.GetFileNameWithoutExtension(filePath);
-            await WaitForDelay((int)_cfg.WatcherDelayMS, nme);
+            var nme   = Path.GetFileNameWithoutExtension(filePath);
+            var delay = withDelay ? _cfg.WatcherDelayMS : 0;
+
+            await WaitForDelay((int)delay, nme);
             //if (HasEveryoneAccess(filePath, nme)) return;
 
             Log($"Attempting to grant Everyone full control of “{nme}” ...");
@@ -69,7 +71,7 @@ namespace FolderWatcherExe.ChangeHandlers
             var dir = _cfg.TargetFolder;
 
             foreach (var file in Directory.GetFiles(dir))
-                await OnFileChanged(file);
+                await OnFileChanged(file, false);
         }
 
 
