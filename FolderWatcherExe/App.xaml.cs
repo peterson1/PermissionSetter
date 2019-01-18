@@ -25,7 +25,7 @@ namespace FolderWatcherExe
             var cfg = new LoggingConfiguration();
             var trg = new FileTarget()
             {
-                FileName = "${basedir}/logs/${shortdate}.log",
+                FileName = "${basedir}/logs/${longdate}.log",
                 Layout   = "[${time}]   ${message}  ${exception}",
             };
             cfg.AddRule(LogLevel.Trace, LogLevel.Fatal, trg);
