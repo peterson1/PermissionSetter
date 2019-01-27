@@ -3,6 +3,7 @@ using CommonTools.Lib45.FileSystemTools;
 using PermissionSetter.Lib11.Configuration;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FolderWatcherExe.ChangeHandlers
@@ -68,9 +69,13 @@ namespace FolderWatcherExe.ChangeHandlers
 
         private async Task ProcessAllFiles()
         {
-            var dir = _cfg.TargetFolder;
+            var files = Directory.GetFiles((_cfg.TargetFolder));
+            var sorted = files.Select           (_ => new FileInfo(_))
+                              .OrderByDescending(_ => _.LastWriteTime)
+                              .Select           (_ => _.FullName)
+                              .ToList           ();
 
-            foreach (var file in Directory.GetFiles(dir))
+            foreach (var file in sorted)
                 await OnFileChanged(file, false);
         }
 
